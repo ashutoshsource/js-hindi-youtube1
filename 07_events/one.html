@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Blade Runner 2049 UI</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap"
+    rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Orbitron',sans-serif;
+      background:#0a0703;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    /* ===============================
+       CINEMATIC BACKGROUND
+    ================================== */
+
+    body::before{
+
+      content:"";
+
+      position:fixed;
+
+      width:100%;
+      height:100%;
+
+      background:
+
+      radial-gradient(
+      circle at center,
+      rgba(255,255,255,0.05) 0%,
+      transparent 45%
+      ),
+
+      radial-gradient(
+      circle at top left,
+      rgba(255,120,0,0.20) 0%,
+      transparent 30%
+      ),
+
+      radial-gradient(
+      circle at bottom right,
+      rgba(0,190,255,0.14) 0%,
+      transparent 35%
+      ),
+
+      linear-gradient(
+      to bottom,
+      #040200,
+      #0b0603,
+      #0b0f14,
+      #040200
+      );
+
+      z-index:-5;
+    }
+
+    body::after{
+
+      content:"";
+
+      position:fixed;
+
+      width:100%;
+      height:100%;
+
+      background:
+      radial-gradient(
+      circle,
+      transparent 0%,
+      rgba(0,0,0,0.38) 100%
+      );
+
+      pointer-events:none;
+
+      z-index:-2;
+
+    }
+
+    .grid{
+      position:fixed;
+      width:100%;
+      height:100%;
+
+      background-image:
+
+      linear-gradient(
+      rgba(120,180,255,0.05) 1px,
+      transparent 1px
+      ),
+
+      linear-gradient(
+      90deg,
+      rgba(120,180,255,0.05) 1px,
+      transparent 1px
+      );
+
+      background-size:60px 60px;
+      z-index:-4;
+    }
+
+    .fog{
+      position:fixed;
+      width:100%;
+      height:100%;
+      backdrop-filter:blur(2px);
+      z-index:-3;
+    }
+
+    /* ===============================
+       BLUE ATMOSPHERIC GLOW
+    ================================== */
+
+    .blue-glow{
+
+      position:absolute;
+
+      width:500px;
+      height:500px;
+
+      background:#00bfff;
+
+      filter:blur(180px);
+
+      opacity:0.10;
+
+      border-radius:50%;
+
+      right:-150px;
+      bottom:-150px;
+
+      z-index:-1;
+
+    }
+
+    /* ===============================
+       NAVBAR
+    ================================== */
+
+    nav{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:25px 80px;
+      position:fixed;
+      top:0;
+      z-index:999;
+      background:rgba(0,0,0,0.2);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+
+    .logo{
+      font-size:28px;
+      font-weight:900;
+      color:#ff9500;
+      letter-spacing:5px;
+      text-shadow:0 0 15px #ff9500;
+    }
+
+    nav ul{
+      display:flex;
+      gap:40px;
+      list-style:none;
+    }
+
+    nav ul li{
+      cursor:pointer;
+      color:#ddd;
+      transition:0.4s;
+      font-size:14px;
+    }
+
+    nav ul li:hover{
+
+      color:#7fdfff;
+
+      text-shadow:
+      0 0 12px rgba(0,190,255,0.7);
+
+    }
+
+    /* ===============================
+       HERO
+    ================================== */
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      text-align:center;
+      padding:160px 20px 80px;
+      position:relative;
+    }
+
+    .hero h1{
+
+      position:relative;
+
+      font-size:130px;
+      line-height:1;
+      letter-spacing:10px;
+      font-weight:900;
+
+      background:linear-gradient(
+
+      to bottom,
+
+      #ffffff,
+      #fff4dc,
+      #ffd89b,
+      #ff8c00,
+      #00bfff
+
+      );
+
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+
+      text-shadow:
+      0 0 20px rgba(255,140,0,0.35),
+      0 0 40px rgba(0,190,255,0.15);
+
+      animation:float 4s infinite alternate ease-in-out;
+    }
+
+    .hero h1::before{
+
+      content:"";
+
+      position:absolute;
+
+      width:500px;
+      height:500px;
+
+      background:white;
+
+      filter:blur(180px);
+
+      opacity:0.04;
+
+      top:-120px;
+      left:-120px;
+
+      z-index:-1;
+
+    }
+
+    @keyframes float{
+      from{
+        transform:translateY(0px);
+      }
+      to{
+        transform:translateY(-15px);
+      }
+    }
+
+    .hero p{
+      margin-top:35px;
+      max-width:900px;
+      line-height:2;
+      color:#d7d0c8;
+      font-size:18px;
+      letter-spacing:1px;
+    }
+
+    .hero-buttons{
+      margin-top:60px;
+      display:flex;
+      gap:25px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:18px 45px;
+      border:none;
+      border-radius:50px;
+      cursor:pointer;
+      font-family:'Orbitron',sans-serif;
+      letter-spacing:2px;
+      transition:0.4s;
+      font-size:14px;
+    }
+
+    .primary{
+
+      background:linear-gradient(
+      to right,
+      #ff7a00,
+      #ffb347
+      );
+
+      color:black;
+
+      box-shadow:
+      0 0 25px rgba(255,140,0,0.35);
+    }
+
+    .primary:hover{
+      transform:scale(1.08);
+      box-shadow:0 0 40px #ff9500;
+    }
+
+    .secondary{
+      background:transparent;
+      border:2px solid #00bfff;
+      color:#7fdfff;
+    }
+
+    .secondary:hover{
+
+      background:#00bfff;
+
+      color:black;
+
+      transform:scale(1.08);
+
+      box-shadow:
+      0 0 25px rgba(0,190,255,0.45);
+
+    }
+
+    /* ===============================
+       HERO PANEL
+    ================================== */
+
+    .hero-panel{
+      margin-top:90px;
+      width:90%;
+      max-width:1200px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
+    }
+
+    .panel{
+
+      background:
+
+      linear-gradient(
+      to bottom right,
+
+      rgba(255,255,255,0.08),
+      rgba(255,255,255,0.02),
+      rgba(255,145,0,0.03)
+
+      );
+
+      border:1px solid rgba(255,255,255,0.08);
+
+      padding:35px;
+      border-radius:25px;
+      backdrop-filter:blur(12px);
+      transition:0.4s;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .panel::before{
+      content:"";
+      position:absolute;
+      width:200%;
+      height:200%;
+
+      background:linear-gradient(
+      45deg,
+      transparent,
+      rgba(255,255,255,0.08),
+      transparent
+      );
+
+      top:-60%;
+      left:-60%;
+      transform:rotate(25deg);
+    }
+
+    .panel:hover{
+      transform:translateY(-10px);
+      box-shadow:0 0 35px rgba(255,255,255,0.08);
+      border-color:#ff9500;
+    }
+
+    .panel h2{
+      color:#ffb347;
+      margin-bottom:20px;
+      font-size:22px;
+    }
+
+    .panel:nth-child(2){
+
+      border:
+      1px solid rgba(0,190,255,0.25);
+
+    }
+
+    .panel:nth-child(2) h2{
+
+      color:#7fdfff;
+
+    }
+
+    .panel p{
+      color:#d3c1ac;
+      line-height:1.9;
+      font-size:14px;
+    }
+
+    /* ===============================
+       DIVIDER
+    ================================== */
+
+    .divider{
+      width:100%;
+      height:1px;
+
+      background:linear-gradient(
+      to right,
+      transparent,
+      rgba(255,255,255,0.6),
+      #ff9500,
+      #00bfff,
+      transparent
+      );
+
+      margin:100px 0;
+    }
+
+    /* ===============================
+       FEATURE SECTION
+    ================================== */
+
+    .features{
+      padding:40px 80px 120px;
+    }
+
+    .section-title{
+      text-align:center;
+      font-size:55px;
+      margin-bottom:80px;
+
+      background:linear-gradient(
+      to right,
+      #ffffff,
+      #ffae00,
+      #00bfff
+      );
+
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:35px;
+    }
+
+    .feature-card{
+
+      background:
+      rgba(255,255,255,0.03);
+
+      padding:45px;
+      border-radius:30px;
+
+      border:
+      1px solid rgba(255,255,255,0.08);
+
+      transition:0.4s;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .feature-card:hover{
+      transform:translateY(-15px);
+      box-shadow:0 0 35px rgba(255,255,255,0.08);
+    }
+
+    .feature-card h3{
+      font-size:28px;
+      margin-bottom:25px;
+      color:#ffae42;
+    }
+
+    .feature-card:nth-child(2) h3{
+      color:#7fdfff;
+    }
+
+    .feature-card:nth-child(5) h3{
+      color:#7fdfff;
+    }
+
+    .feature-card p{
+      line-height:2;
+      color:#d2bda4;
+    }
+
+    /* ===============================
+       STATS
+    ================================== */
+
+    .stats{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:40px;
+      padding:100px 40px;
+    }
+
+    .stat{
+      width:260px;
+      padding:50px 20px;
+      text-align:center;
+      border-radius:30px;
+
+      background:
+      rgba(255,255,255,0.03);
+
+      border:
+      1px solid rgba(255,255,255,0.08);
+
+      transition:0.4s;
+    }
+
+    .stat:hover{
+      transform:scale(1.06);
+      box-shadow:0 0 35px rgba(255,255,255,0.08);
+    }
+
+    .stat h1{
+      font-size:70px;
+      color:#ff9500;
+      margin-bottom:15px;
+    }
+
+    .stat p{
+      color:#d6c2ab;
+    }
+
+    /* ===============================
+       TIMELINE
+    ================================== */
+
+    .timeline{
+      padding:100px 80px;
+    }
+
+    .timeline-box{
+      border-left:2px solid #00bfff;
+      padding-left:40px;
+      margin-bottom:50px;
+      position:relative;
+    }
+
+    .timeline-box::before{
+      content:"";
+      position:absolute;
+      left:-11px;
+      top:5px;
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      background:#00bfff;
+      box-shadow:0 0 15px #00bfff;
+    }
+
+    .timeline-box h2{
+      color:#7fdfff;
+      margin-bottom:15px;
+    }
+
+    .timeline-box p{
+      color:#d2bda4;
+      line-height:2;
+    }
+
+    /* ===============================
+       FOOTER
+    ================================== */
+
+    footer{
+
+      margin-top:100px;
+
+      padding:80px 20px;
+
+      text-align:center;
+
+      border-top:
+      1px solid rgba(255,255,255,0.08);
+
+      background:
+      rgba(0,0,0,0.25);
+
+      backdrop-filter:blur(10px);
+
+    }
+
+    footer h2{
+      font-size:40px;
+      color:#ffffff;
+      margin-bottom:20px;
+      text-shadow:0 0 20px rgba(255,255,255,0.2);
+    }
+
+    footer p{
+      color:#c9b39c;
+      line-height:2;
+    }
+
+    /* ===============================
+       RESPONSIVE
+    ================================== */
+
+    @media(max-width:900px){
+
+      nav{
+        padding:20px;
+      }
+
+      nav ul{
+        gap:20px;
+        font-size:12px;
+      }
+
+      .hero h1{
+        font-size:75px;
+      }
+
+      .features,
+      .timeline{
+        padding:80px 25px;
+      }
+
+    }
+
+    @media(max-width:600px){
+
+      .hero h1{
+        font-size:52px;
+      }
+
+      .hero p{
+        font-size:15px;
+      }
+
+      nav ul{
+        display:none;
+      }
+
+      .section-title{
+        font-size:38px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="grid"></div>
+  <div class="fog"></div>
+
+  <!-- NAVBAR -->
+
+  <nav>
+
+    <div class="logo">
+      BLADE UI
+    </div>
+
+    <ul>
+      <li>HOME</li>
+      <li>DISTRICTS</li>
+      <li>ANDROIDS</li>
+      <li>NEXUS</li>
+      <li>CONTACT</li>
+    </ul>
+
+  </nav>
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="blue-glow"></div>
+
+    <h1>
+      BLADE <br>
+      RUNNER
+    </h1>
+
+    <p>
+      Enter a cinematic cyberpunk universe inspired by Blade Runner 2049.
+      Neon haze, holographic interfaces, futuristic architecture and dystopian city lights combine into an immersive orange-blue futuristic atmosphere.
+    </p>
+
+    <div class="hero-buttons">
+
+      <button class="btn primary">
+        ENTER CITY
+      </button>
+
+      <button class="btn secondary">
+        WATCH TRAILER
+      </button>
+
+    </div>
+
+    <!-- PANELS -->
+
+    <div class="hero-panel">
+
+      <div class="panel">
+        <h2>NEON DISTRICTS</h2>
+
+        <p>
+          Massive industrial skylines illuminated by atmospheric orange holograms and cinematic futuristic advertisements.
+        </p>
+      </div>
+
+      <div class="panel">
+        <h2>CYBER AI</h2>
+
+        <p>
+          Advanced artificial intelligence systems interacting inside deep neural futuristic environments.
+        </p>
+      </div>
+
+      <div class="panel">
+        <h2>OFF WORLD</h2>
+
+        <p>
+          Colonies beyond Earth engineered with hyper advanced robotic ecosystems and interstellar infrastructure.
+        </p>
+      </div>
+
+      <div class="panel">
+        <h2>REPLICANTS</h2>
+
+        <p>
+          Synthetic beings built with human-like consciousness, memories and emotional architecture.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FEATURES -->
+
+  <section class="features">
+
+    <h1 class="section-title">
+      FUTURE SYSTEMS
+    </h1>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <h3>HOLOGRAPHIC UI</h3>
+
+        <p>
+          Dynamic glowing interfaces designed with cinematic orange lighting inspired by futuristic hologram systems.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>CYBER NETWORK</h3>
+
+        <p>
+          Real-time interconnected digital infrastructure powered by autonomous intelligence and quantum systems.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>SPACE COLONIES</h3>
+
+        <p>
+          Terraforming operations and interplanetary civilizations expanding humanity beyond Earth.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>BIO ENGINEERING</h3>
+
+        <p>
+          Genetically optimized synthetic life forms designed for futuristic industrial ecosystems.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>QUANTUM AI</h3>
+
+        <p>
+          Self-evolving intelligence systems capable of predictive simulations and advanced cyber analysis.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>MEGA CITIES</h3>
+
+        <p>
+          Hyper dense neon urban architecture illuminated through cinematic atmospheric lighting.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- STATS -->
+
+  <section class="stats">
+
+    <div class="stat">
+      <h1>2049</h1>
+      <p>YEAR OF THE FUTURE</p>
+    </div>
+
+    <div class="stat">
+      <h1>99%</h1>
+      <p>AI NETWORK SYNCHRONIZATION</p>
+    </div>
+
+    <div class="stat">
+      <h1>12M</h1>
+      <p>NEON CITY POPULATION</p>
+    </div>
+
+    <div class="stat">
+      <h1>∞</h1>
+      <p>DIGITAL POSSIBILITY</p>
+    </div>
+
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TIMELINE -->
+
+  <section class="timeline">
+
+    <h1 class="section-title">
+      FUTURE TIMELINE
+    </h1>
+
+    <div class="timeline-box">
+
+      <h2>2029 — AI EVOLUTION</h2>
+
+      <p>
+        Artificial intelligence surpasses conventional computational systems and begins autonomous learning expansion.
+      </p>
+
+    </div>
+
+    <div class="timeline-box">
+
+      <h2>2038 — QUANTUM NETWORK</h2>
+
+      <p>
+        Planetary cyber infrastructure evolves into ultra-fast interconnected quantum neural systems.
+      </p>
+
+    </div>
+
+    <div class="timeline-box">
+
+      <h2>2049 — OFF WORLD ERA</h2>
+
+      <p>
+        Humanity begins expansion toward extra-terrestrial mega colonies powered by synthetic ecosystems.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <h2>BLADE RUNNER UI</h2>
+
+    <p>
+      Inspired by the cinematic orange-blue cyberpunk atmosphere of Blade Runner 2049.
+      Built using HTML and CSS with futuristic neon aesthetics.
+    </p>
+
+  </footer>
+
+</body>
+
+</html>
